@@ -9,9 +9,3 @@ export default function TypeCard(props){
 
     )
 }
-
-function push(){
-    return <div>hello github</div>;
-}
-
-console.log(push());
