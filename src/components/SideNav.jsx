@@ -1,15 +1,35 @@
 import { first151Pokemon, getFullPokedexNumber } from "../utils"
+import {useState} from 'react'
 
-export default function SideNav(){
+export default function SideNav(props){
+
+    const {selectedPokemon, setSelectedPokemon} = props
+
+    const [searchValue, setSearchValue] = useState('')
+
+    const filteredPokemon = first151Pokemon.filter((ele, eleIndex) => {
+        if (toString(getFullPokedexNumber(eleIndex)).includes
+        (searchValue)) {return true}
+
+        if (ele.toLowerCase().includes(searchValue.toLowerCase())) {return true}
+
+        return false
+    })
+
     return (
         <nav>
             <div className={"header"}>
                 <h1 className="text-gradient">Pokedex</h1>
             </div>
-            <input />
-            {first151Pokemon.map((pokemon, pokemonIndex) => {
-                return( <button key={pokemonIndex} className={'nav-card'}> 
-                    <p>{getFullPokedexNumber(pokemonIndex)}</p>
+            <input value={searchValue} onChange={(e) => {
+                setSearchValue(e.target.value)
+            }}/>
+            {filteredPokemon.map((pokemon, pokemonIndex) => {
+                return( 
+                <button onClick={() => {
+                    setSelectedPokemon(pokemonIndex)
+                }} key={pokemonIndex} className={'nav-card ' + (pokemonIndex === selectedPokemon ? 'nav-card-selected' : ' ')}> 
+                    <p>{getFullPokedexNumber(first151Pokemon.indexOf(pokemon))}</p>
                     <p>{[pokemon]}</p>
                 </button>
             )
