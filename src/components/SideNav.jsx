@@ -8,7 +8,7 @@ export default function SideNav(props){
     const [searchValue, setSearchValue] = useState('')
 
     const filteredPokemon = first151Pokemon.filter((ele, eleIndex) => {
-        if (toString(getFullPokedexNumber(eleIndex)).includes
+        if ((getFullPokedexNumber(eleIndex)).includes
         (searchValue)) {return true}
 
         if (ele.toLowerCase().includes(searchValue.toLowerCase())) {return true}
@@ -25,11 +25,14 @@ export default function SideNav(props){
                 setSearchValue(e.target.value)
             }}/>
             {filteredPokemon.map((pokemon, pokemonIndex) => {
+
+                const truePokemonIndex = first151Pokemon.indexOf(pokemon)
+
                 return( 
                 <button onClick={() => {
-                    setSelectedPokemon(pokemonIndex)
+                    setSelectedPokemon(truePokemonIndex)
                 }} key={pokemonIndex} className={'nav-card ' + (pokemonIndex === selectedPokemon ? 'nav-card-selected' : ' ')}> 
-                    <p>{getFullPokedexNumber(first151Pokemon.indexOf(pokemon))}</p>
+                    <p>{getFullPokedexNumber(truePokemonIndex)}</p>
                     <p>{[pokemon]}</p>
                 </button>
             )
